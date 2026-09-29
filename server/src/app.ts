@@ -7,4 +7,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Routes
+import mainRoute from "./router/mainRoute.js";
+app.use("/api/v1", mainRoute);
+
 export default app;
