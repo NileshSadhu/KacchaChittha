@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import session from "express-session";
 import connectPgSimple from "connect-pg-simple";
+import passport from "./auth/passport.js";
 import { errorHandler } from "./utils/errorHandler.js";
 import mainRoute from "./router/mainRoute.js";
 
@@ -35,6 +36,9 @@ app.use(
     },
   }),
 );
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/api/v1", mainRoute);
 
