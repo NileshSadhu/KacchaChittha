@@ -6,11 +6,16 @@ import {
   getMe,
 } from "../controllers/auth.controller.js";
 import { requireAuth } from "../middlewares/requireAuth.js";
+import {
+  authInitLimiter,
+  authApiLimiter,
+} from "../middlewares/rateLimiter.js";
 
 const authRoute = Router();
 
 authRoute.get(
   "/google",
+  authInitLimiter,
   passport.authenticate("google", {
     scope: ["profile", "email"],
     prompt: "select_account",
@@ -26,7 +31,7 @@ authRoute.get(
   googleCallback,
 );
 
-authRoute.post("/signout", requireAuth, signOut);
-authRoute.get("/me", requireAuth, getMe);
+authRoute.post("/signout", authApiLimiter, requireAuth, signOut);
+authRoute.get("/me", authApiLimiter, requireAuth, getMe);
 
 export default authRoute;
