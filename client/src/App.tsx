@@ -1,10 +1,11 @@
-import "./App.css";
+import { Layout } from './components/layout/Layout';
+import { HomePage } from './pages/HomePage';
 
 function App() {
   return (
-    <div>
-      <h1>Kachhachitta</h1>
-    </div>
+    <Layout>
+      <HomePage />
+    </Layout>
   );
 }
 
