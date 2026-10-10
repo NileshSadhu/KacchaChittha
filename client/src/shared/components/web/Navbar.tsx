@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, type FC } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { Menu, X, User, ChevronDown, LayoutDashboard, Settings, LogOut } from 'lucide-react';
 import CustomBtn from '../CustomBtn';
 
@@ -27,6 +28,8 @@ const Navbar: FC<NavbarProps> = ({
   onContactClick,
   className = '',
 }) => {
+  const navigate = useNavigate();
+
   // Supports both controlled mode via props or internal state for immediate testing
   const [internalLoggedIn, setInternalLoggedIn] = useState<boolean>(false);
   const isLoggedIn = controlledIsLoggedIn !== undefined ? controlledIsLoggedIn : internalLoggedIn;
@@ -102,8 +105,7 @@ const Navbar: FC<NavbarProps> = ({
     if (onPricingClick) {
       onPricingClick();
     } else {
-      const el = document.getElementById('pricing');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      navigate('/pricing');
     }
   };
 
@@ -112,8 +114,7 @@ const Navbar: FC<NavbarProps> = ({
     if (onContactClick) {
       onContactClick();
     } else {
-      const el = document.getElementById('contact');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      navigate('/contact');
     }
   };
 
@@ -143,32 +144,28 @@ const Navbar: FC<NavbarProps> = ({
     >
       {/* Centered Floating Island Navbar */}
       <header
-        className={`pointer-events-auto w-full max-w-4xl rounded-full transition-all duration-300 border ${
-          isScrolled
-            ? 'bg-white/95 backdrop-blur-xl border-neutral-300 shadow-[0_10px_30px_-5px_rgba(0,0,0,0.1)]'
-            : 'bg-white/80 backdrop-blur-md border-neutral-200 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)]'
-        }`}
+        className={`pointer-events-auto w-full max-w-4xl rounded-full transition-all duration-300 border ${isScrolled
+          ? 'bg-white/95 backdrop-blur-xl border-neutral-300 shadow-[0_10px_30px_-5px_rgba(0,0,0,0.1)]'
+          : 'bg-white/80 backdrop-blur-md border-neutral-200 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)]'
+          }`}
       >
         <div className="px-5 sm:px-7 h-14 sm:h-16 flex items-center justify-between">
-          
+
           {/* ========================================================
               LEFT: FinArt Brand (Clean Text, No Dollar Icon)
              ======================================================== */}
           <div className="flex items-center">
-            <a
-              href="/"
-              onClick={(e) => {
-                if (window.location.pathname === '/') {
-                  e.preventDefault();
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
+            <Link
+              to="/"
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 setIsMobileMenuOpen(false);
               }}
               className="text-xl sm:text-2xl font-bold tracking-tight text-black select-none hover:opacity-85 transition-opacity"
               aria-label="FinArt Home"
             >
               FinArt
-            </a>
+            </Link>
           </div>
 
           {/* ========================================================
@@ -228,9 +225,8 @@ const Navbar: FC<NavbarProps> = ({
                     </div>
                   )}
                   <ChevronDown
-                    className={`w-3.5 h-3.5 text-neutral-500 transition-transform duration-200 mr-1 ${
-                      isProfileDropdownOpen ? 'rotate-180 text-black' : ''
-                    }`}
+                    className={`w-3.5 h-3.5 text-neutral-500 transition-transform duration-200 mr-1 ${isProfileDropdownOpen ? 'rotate-180 text-black' : ''
+                      }`}
                   />
                 </button>
 
