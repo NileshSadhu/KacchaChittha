@@ -3,6 +3,7 @@ import WebLayout from "../layouts/WebLayout";
 import LandingPage from "../../pages/web/LandingPage";
 import PricingPage from "../../pages/web/PricingPage";
 import ContactPage from "../../pages/web/Contactpage";
+import NotFoundPage from "../../pages/NotFoundPage";
 
 export const router = createBrowserRouter([
     // Web Layout (Navbar and Footer always present, inside content changes dynamically)
@@ -20,6 +21,11 @@ export const router = createBrowserRouter([
             {
                 path: "/contact",
                 element: <ContactPage />
+            },
+            // Not Found 404 inside WebLayout
+            {
+                path: "*",
+                element: <NotFoundPage />
             }
         ]
     },
@@ -27,10 +33,5 @@ export const router = createBrowserRouter([
     // login
     {
         path: "/auth"
-    },
-
-    // Not Found 404
-    {
-        path: '*'
     }
 ]);
